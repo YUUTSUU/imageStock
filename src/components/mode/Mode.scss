@@ -1,0 +1,76 @@
+.mode {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  display: flex;
+  justify-content: center;
+  padding: 4.4rem 0 4.0rem 0;
+
+  &__block {
+    display: flex;
+    justify-content: space-between;
+    width: 4.1rem;
+  }
+
+  &__ribbon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 1.4rem;
+    height: 1.4rem;
+    cursor: pointer;
+  }
+
+  // &__ribbon.active .mode__item_ribbon {
+  //   background-color: #000;
+  // }
+
+  &__tile {
+    display: flex;
+    width: 1.4rem;
+    height: 1.4rem;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    cursor: pointer;
+  }
+
+  &__tile.active .mode__item_tile {
+    background-color: #000;
+  }
+
+  &__item {
+    display: block;
+    background-color: #BDBDBD;
+
+    &_ribbon {
+      height: 0.6rem;
+      width: 100%;
+    }
+
+    &_tile {
+      width: 0.6rem;
+      height: 0.6rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 77.5em) {
+}
+
+@media only screen and (max-width: 62.5em) {
+}
+
+@media only screen and (max-width: 50em) {
+}
+
+@media only screen and (max-width: 40.62em) {
+  .mode__tile.active .mode__item_tile {
+    background-color: #BDBDBD;
+  }
+
+  .mode__ribbon.active .mode__item_ribbon {
+    background-color: #000;
+  }
+}
+
+@media only screen and (max-width: 31.25em) {
+}
