@@ -1,12 +1,16 @@
 import axios from "axios"
 
-const service = async (search = 'all') => {
-  const url = 'https://api.unsplash.com'
-  const client_id = 'zzqpeE42R5zzjnVmGgWJc7TzM73NJjwrDPRAFpgFJX8'
-  const offset = 24
+const _baseUrl = 'https://api.unsplash.com/search'
+const _client_id = 'zzqpeE42R5zzjnVmGgWJc7TzM73NJjwrDPRAFpgFJX8'
+const _baseOffset = 1
+
+const service = async (search = 'all', offset = _baseOffset) => {
   try {
-    const res = await axios.get(`${url}/search/photos?page=1&per_page=${ offset }&query=${ search }&client_id=${ client_id }`)
-    return res.data.results.map(_transformImage)
+    const res = await axios.get(`${ _baseUrl }/photos?page=${ offset }&per_page=9&query=${ search }&client_id=${ _client_id }`)
+    return {
+      data: res.data.results.map(_transformImage),
+      total: res.headers['x-total']
+    }
   } catch (error) {
     throw error
   }
@@ -25,3 +29,26 @@ const _transformImage = (data) => {
 }
 
 export default service
+
+
+
+// <ul className='content__list' style={mode ? {columnCount: "1"} : {columnCount: "3"}}>
+//   {content}
+// </ul>
+
+// 'Wallpapers',
+//   'Textures & Patterns',
+//   'Nature',
+//   'Current Events',
+//   'Architecture',
+//   'Business & Work',
+//   'Film',
+//   'Animals',
+//   'Travel',
+//   'Fashion',
+//   'Food & Drink',
+//   'Spirituality',
+//   'Experimental',
+//   'People',
+//   'Health Arts',
+//   'Culture'

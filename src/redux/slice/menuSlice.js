@@ -6,29 +6,29 @@ const menuSlice = createSlice({
     search: false,
     history: false,
     mode: false,
-    searchData: [
-      'Wallpapers',
-      'Textures & Patterns',
-      'Nature',
-      'Current Events',
-      'Architecture',
-      'Business & Work',
-      'Film',
-      'Animals',
-      'Travel',
-      'Fashion',
-      'Food & Drink',
-      'Spirituality',
-      'Experimental',
-      'People',
-      'Health Arts',
-      'Culture'
+    list: [
+      // 'Wallpapers',
+      // 'Textures & Patterns',
+      // 'Nature',
+      // 'Current Events',
+      // 'Architecture',
+      // 'Business & Work',
+      // 'Film',
+      // 'Animals',
+      // 'Travel',
+      // 'Fashion',
+      // 'Food & Drink',
+      // 'Spirituality',
+      // 'Experimental',
+      // 'People',
+      // 'Health Arts',
+      // 'Culture'
     ],
-    content: [],
+    unsplash: [],
     favorites: []
   },
   reducers: {
-    componentShow: (state, action) => {
+    SearchHistorycomponent: (state, action) => {
       switch (action.payload.target.closest('.menu__block').getAttribute('data-item')) {
         case "search":
           return {
@@ -48,7 +48,7 @@ const menuSlice = createSlice({
           }
       }
     },
-    modeShow: (state, action) => {
+    modeComponent: (state, action) => {
       switch (action.payload.target.closest('.mode__block').getAttribute('data-item')) {
         case "rabbin":
           return {
@@ -66,7 +66,7 @@ const menuSlice = createSlice({
           }
       }
     },
-    widthMode: (state) => {
+    widthView: (state) => {
       if (window.innerWidth < 650) {
         return {
           ...state,
@@ -79,25 +79,31 @@ const menuSlice = createSlice({
         }
       }
     },
-    searchValueAdd: (state, action) => {
+    searchRequest: (state, action) => {
       return {
         ...state,
-        searchData: [
-          ...state.searchData,
+        list: [
+          ...state.list,
           action.payload
         ]
       }
     },
-    contentImageAdd: (state, action) => {
+    unsplashRequest: (state, action) => {
       return {
         ...state,
-        content: [
-          ...state.content,
+        unsplash: [
+          ...state.unsplash,
           ...action.payload
         ]
       }
     },
-    favoritesAdd: (state, action) => {
+    unsplashClear: (state) => {
+      return {
+        ...state,
+        unsplash: []
+      }
+    },
+    favoritesRequest: (state, action) => {
       return {
         ...state,
         favorites: [
@@ -110,13 +116,13 @@ const menuSlice = createSlice({
 })
 
 export const {
-  componentShow,
-  modeShow,
-  searchInputValue,
-  searchValueAdd,
-  widthMode,
-  contentImageAdd,
-  favoritesAdd
+  SearchHistorycomponent,
+  modeComponent,
+  widthView,
+  searchRequest,
+  unsplashRequest,
+  unsplashClear,
+  favoritesRequest
 } = menuSlice.actions
 
 export default menuSlice.reducer

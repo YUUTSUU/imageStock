@@ -1,7 +1,6 @@
-// import {useState} from 'react'
 import {Link} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
-import {componentShow} from '../../redux/slice/menuSlice'
+import {SearchHistorycomponent} from '../../redux/slice/menuSlice'
 import SearchComponent from '../search/Search'
 import HistoryComponent from '../history/History'
 import Brand from './img/brand.svg'
@@ -29,7 +28,7 @@ const Menu = () => {
           <div className='menu__container'>
             <div data-item='search'
               className={search ? 'menu__block menu__block_line active' : 'menu__block menu__block_line'}
-              onClick={(event) => dispatch(componentShow(event))}>
+              onClick={(event) => dispatch(SearchHistorycomponent(event))}>
               <div className='menu__image'>
                 <img src={Search} alt="search" />
               </div>
@@ -43,7 +42,7 @@ const Menu = () => {
             </Link>
             <div data-item='history'
               className={history ? 'menu__block menu__block_line active' : 'menu__block menu__block_line'}
-              onClick={(event) => dispatch(componentShow(event))}>
+              onClick={(event) => dispatch(SearchHistorycomponent(event))}>
               <div className='menu__image'>
                 <img src={History} alt="history" />
               </div>
