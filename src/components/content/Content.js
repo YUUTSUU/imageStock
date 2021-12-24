@@ -17,7 +17,7 @@ const Content = () => {
   const [offset, setOffset] = useState(1)
   const [total, setTotal] = useState(0)
 
-  const {search, history, mode, unsplash} = useSelector((state) => state.menu)
+  const {search, history, mode, unsplash, value} = useSelector((state) => state.menu)
   const dispatch = useDispatch()
 
   const onDisabled = useCallback(() => {
@@ -57,20 +57,22 @@ const Content = () => {
     const scrollTop = event.target.documentElement.scrollTop
     const clientHeight = event.target.documentElement.clientHeight
 
-    if (scrollHeight - scrollTop === clientHeight && unsplash.length < total) {
-      onRequest('all', offset)
+    if ((scrollHeight - scrollTop) === clientHeight && unsplash.length < total) {
+      onRequest(value, offset)
     }
-  }, [offset, onRequest, total, unsplash])
+  }, [offset, onRequest, total, unsplash, value])
 
   useEffect(() => {
     if (disabled) {
-      onRequest()
+      onRequest(value)
     }
+
+    console.log("render")
     document.addEventListener('scroll', scrollHandler)
     return () => {
       document.removeEventListener('scroll', scrollHandler)
     }
-  }, [disabled, onRequest, scrollHandler, unsplash])
+  }, [disabled, onRequest, scrollHandler, value])
 
   const renderContent = (data) => {
     const content = data.map(item => {

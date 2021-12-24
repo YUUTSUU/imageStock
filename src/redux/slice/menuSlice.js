@@ -24,6 +24,7 @@ const menuSlice = createSlice({
       // 'Health Arts',
       // 'Culture'
     ],
+    value: 'all',
     unsplash: [],
     favorites: []
   },
@@ -88,6 +89,12 @@ const menuSlice = createSlice({
         ]
       }
     },
+    searchInput: (state, action) => {
+      return {
+        ...state,
+        value: action.payload
+      }
+    },
     unsplashRequest: (state, action) => {
       return {
         ...state,
@@ -120,6 +127,7 @@ export const {
   modeComponent,
   widthView,
   searchRequest,
+  searchInput,
   unsplashRequest,
   unsplashClear,
   favoritesRequest

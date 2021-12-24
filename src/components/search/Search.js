@@ -1,9 +1,9 @@
 import {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {searchRequest, unsplashRequest, unsplashClear} from '../../redux/slice/menuSlice'
-import service from '../../service/service'
+import {searchRequest, searchInput, unsplashClear, unsplashRequest} from '../../redux/slice/menuSlice'
 import img from './search.svg'
-import {createApi} from 'unsplash-js';
+// import {createApi} from 'unsplash-js';
+import service from '../../service/service'
 import './Search.scss'
 
 const Search = () => {
@@ -11,22 +11,9 @@ const Search = () => {
   const {list} = useSelector((state) => state.menu)
   const dispatch = useDispatch()
 
-  const unsplash = createApi({
-    accessKey: 'zzqpeE42R5zzjnVmGgWJc7TzM73NJjwrDPRAFpgFJX8'
-  })
-
-  // const onRequest = useCallback(async (search, offset) => {
-  //   try {
-  //     // onDisabled()
-  //     const res = await service(search, offset)
-  //     onLoaded(res.data)
-  //     console.log(res.data)
-  //     setOffset(prevOffset => prevOffset + 24)
-  //     // setTotal(res.total)
-  //   } catch (e) {
-  //     // onError()
-  //   }
-  // }, [onDisabled, onError, onLoaded])
+  // const unsplash = createApi({
+  //   accessKey: 'zzqpeE42R5zzjnVmGgWJc7TzM73NJjwrDPRAFpgFJX8'
+  // })
 
   const inputHandler = (event) => {
     setInput(event.target.value)
@@ -35,11 +22,12 @@ const Search = () => {
   const onInput = async(event) => {
     event.preventDefault()
     dispatch(searchRequest(input))
-    unsplash.search.getPhotos({query: 'cat'})
-    .then(res => console.log(res.response.results[0].urls.regular))
-    // const res = await service(input)
-    // dispatch(unsplashClear())
-    // dispatch(unsplashRequest(res.data))
+    dispatch(unsplashClear())
+    dispatch(searchInput(input))
+    const res = await service(input)
+    dispatch(unsplashRequest(res.data))
+    // unsplash.search.getPhotos({query: 'cat'})
+    // .then(res => console.log(res.response.results[0].urls.regular))
   }
 
   useEffect(() => {
