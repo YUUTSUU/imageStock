@@ -5,6 +5,10 @@
   flex-direction: column;
   align-items: center;
 
+  &__form {
+    display: flex;
+  }
+
   &__title {
     background-color: transparent;
     border: none;
@@ -14,6 +18,7 @@
     line-height: 6rem;
     text-transform: capitalize;
     width: 100%;
+    margin-left: 7rem;
 
     input {
       width: 100%;
@@ -24,16 +29,25 @@
     }
 
     &::placeholder { 
-      color: #fff; 
+      color: #fff;
     }
-  }  
+  }
+
+  &__button {
+    width: 7rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
 
   &__line {
     margin: 1.8rem 0;
-    height: 0.09rem;
-    // width: 55vw;
-    width: 80%;
-    background-image: linear-gradient(270deg, rgba(51, 51, 51, 0) 0%, #fff 50%, rgba(51, 51, 51, 0.5) 100%);
+    height: 0.1rem;
+    width: 67%;
+    background-image: linear-gradient(270deg, #33333300 0%, #fff 50%, #33333380 100%);
     border-top-left-radius: 70%;
     border-bottom-left-radius: 30%;
     border-top-right-radius: 70%;
@@ -41,25 +55,28 @@
     opacity: .5;
   }
 
-  &__block {
+  &__list {
+    display: flex;
+    list-style: none;
     width: 65vw;
     overflow: hidden;
-  }
-
-  &__list {
-    list-style: none;
-    display: flex;
   }
 
   &__item {
     font-size: 1.1rem;
     line-height: 1.3rem;   
-    background-image: linear-gradient(270deg, rgba(51, 51, 51, 0) 20%, #fff 40%);
+    background-image: linear-gradient(270deg, #33333300 20%, #fff 40%);
     background-attachment: fixed;
     background-clip: text;
     color: transparent;
     flex-shrink: 0;
-    flex-grow: 1;
+    // flex-grow: 1;
+    cursor: pointer;
+    padding-bottom: .2rem;
+
+    &:hover {
+      background-image: linear-gradient(270deg, #33333300 20%, #b3b0b0 40%);
+    }    
   }
 
   &__item:not(:last-child) {
@@ -88,7 +105,10 @@
 }
 
 @media only screen and (max-width: 31.25em) {
-  .search__block {
+  .search__line {
+    width: 100%;
+  }
+  .search__list {
     width: 85vw;
   }
 }

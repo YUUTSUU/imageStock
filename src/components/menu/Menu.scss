@@ -1,7 +1,7 @@
 .menu {
   grid-column: 1/-1;
   grid-row: 1/2;
-  padding: 5.6rem 0;
+  padding: 1.5rem 0 1.2rem 0;
   background-color: #000;
 
   &__inner {
@@ -37,24 +37,20 @@
     cursor: pointer;
     position: relative;
     padding-bottom: .25rem;
-  }
 
-  &__block.active::after {
-    content: '';
-    position: absolute;
-    width: 1.8rem;
-    height: .2rem;
-    right: 0;
-    bottom: 0;
-    background-color: #fff;
+    &_line:hover::after {
+      content: '';
+      position: absolute;
+      width: 1.8rem;
+      height: .2rem;
+      right: 0;
+      bottom: 0;
+      background-color: #fff;
+    }
   }
 
   &__block:not(:last-child) {
     margin-right: 1.2rem;
-  }
-
-  &__block:hover {
-    color: rgb(179, 176, 176);
   }
 
   &__brand {

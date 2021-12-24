@@ -1,14 +1,36 @@
+import {useEffect, useCallback} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {modeShow, widthMode} from '../../redux/slice/menuSlice'
 import './Mode.scss'
 
 const Mode = () => {
+  const {mode} = useSelector((state) => state.menu)
+  const dispatch = useDispatch()
+
+  const modeWidth = useCallback(() => {
+    dispatch(widthMode())
+  }, [dispatch])
+
+  useEffect(() => {
+    window.addEventListener('resize', modeWidth)
+    modeWidth()
+    return () => {
+      window.removeEventListener('resize', modeWidth)
+    }
+  }, [dispatch, modeWidth])
+
   return (
     <div className='mode'>
-      <div className='mode__block'>
-        <div className='mode__ribbon active'>
+      <div className='mode__container'>
+        <div data-item='rabbin'
+          className={mode ? 'mode__block mode__ribbon active' : 'mode__block mode__ribbon'}
+          onClick={(event) => dispatch(modeShow(event))}>
           <span className='mode__item mode__item_ribbon'></span>
           <span className='mode__item mode__item_ribbon'></span>
         </div>
-        <div className='mode__tile active'>
+        <div data-item='tile'
+          className={!mode ? 'mode__block mode__tile active' : 'mode__block mode__tile'}
+          onClick={(event) => dispatch(modeShow(event))}>
           <span className='mode__item mode__item_tile'></span>
           <span className='mode__item mode__item_tile'></span>
           <span className='mode__item mode__item_tile'></span>

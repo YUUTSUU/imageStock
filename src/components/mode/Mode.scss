@@ -1,11 +1,9 @@
 .mode {
-  grid-column: 2/3;
-  grid-row: 2/3;
   display: flex;
   justify-content: center;
-  padding: 4.4rem 0 4.0rem 0;
+  padding-bottom: 4.0rem;
 
-  &__block {
+  &__container {
     display: flex;
     justify-content: space-between;
     width: 4.1rem;
@@ -20,9 +18,9 @@
     cursor: pointer;
   }
 
-  // &__ribbon.active .mode__item_ribbon {
-  //   background-color: #000;
-  // }
+  &__ribbon.active .mode__item_ribbon {
+    background-color: #000;
+  }
 
   &__tile {
     display: flex;
@@ -63,13 +61,13 @@
 }
 
 @media only screen and (max-width: 40.62em) {
-  .mode__tile.active .mode__item_tile {
-    background-color: #BDBDBD;
-  }
+  // .mode__tile.active .mode__item_tile {
+  //   background-color: #000;
+  // }
 
-  .mode__ribbon.active .mode__item_ribbon {
-    background-color: #000;
-  }
+  // .mode__ribbon.active .mode__item_ribbon {
+  //   background-color: #000;
+  // }
 }
 
 @media only screen and (max-width: 31.25em) {

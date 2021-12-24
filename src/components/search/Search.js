@@ -1,29 +1,46 @@
+import {useState, useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {searchValueAdd} from '../../redux/slice/menuSlice'
+import img from './search.svg'
 import './Search.scss'
 
 const Search = () => {
+  const [searchInput, setSearchInput] = useState('')
+  const {searchData} = useSelector((state) => state.menu)
+  const dispatch = useDispatch()
+
+  const inputValue = (event) => {
+    setSearchInput(event.target.value)
+  }
+
+  const inputValueAdd = (event) => {
+    event.preventDefault()
+    dispatch(searchValueAdd(searchInput))
+  }
+
+  useEffect(() => {
+    console.log(searchData)
+  }, [searchData])
+
   return (
     <div className='search'>
-      <div className='search__header'>
-        <input type="text" className='search__title' placeholder='Поиск'/>
-      </div>
+      <form className='search__form'>
+        <input type="text"
+          className='search__title'
+          placeholder='Поиск'
+          name='search'
+          onChange={(event) => inputValue(event)} />
+        <button type='submit'
+          className='search__button'
+          onClick={(event) => inputValueAdd(event)}>
+          <img src={img} alt="Search" />
+        </button>
+      </form>
       <div className='search__line'></div>
-      <div className='search__block'>
-        <ul className='search__list'>
-          <li className="search__item">Wallpapers</li>
-          <li className="search__item">Textures & Patterns</li>
-          <li className="search__item">Nature</li>
-          <li className="search__item">Current Events</li>
-          <li className="search__item">Architecture</li>
-          <li className="search__item">Business & Work</li>
-          <li className="search__item">Film</li>
-          <li className="search__item">Animals</li>
-          <li className="search__item">Travel</li>
-          <li className="search__item">Fashion</li>
-          <li className="search__item">Food & Drink</li>
-          <li className="search__item">Spirituality</li>
-        </ul>
-      </div>
-    </div> 
+      <ul className='search__list'>
+        {searchData.map((item, i) => (<li key={i} className="search__item">{item}</li>))}
+      </ul>
+    </div>
   )
 }
 
