@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
-import {SearchHistorycomponent} from '../../redux/slice/menuSlice'
+import {navigation} from '../../redux/slice/navigationSlice'
 import SearchComponent from '../search/Search'
 import HistoryComponent from '../history/History'
 import Brand from './img/brand.svg'
@@ -10,11 +10,11 @@ import History from './img/history.svg'
 import './Menu.scss'
 
 const Menu = () => {
-  const {search, history} = useSelector((state) => state.menu)
+  const {searchComponent, historyComponent} = useSelector((state) => state.navigation)
   const dispatch = useDispatch()
 
   return (
-    <div className='menu' style={search || history ? {padding: "5.6rem"} : null}>
+    <div className='menu' style={searchComponent || historyComponent ? {padding: "5.6rem"} : null}>
       <div className='menu__inner'>
         <div className='menu__navigation'>
           <div className='menu__brand'>
@@ -27,8 +27,8 @@ const Menu = () => {
           </div>
           <div className='menu__container'>
             <div data-item='search'
-              className={search ? 'menu__block menu__block_line active' : 'menu__block menu__block_line'}
-              onClick={(event) => dispatch(SearchHistorycomponent(event))}>
+              className={searchComponent ? 'menu__block menu__block_line active' : 'menu__block menu__block_line'}
+              onClick={(event) => dispatch(navigation(event))}>
               <div className='menu__image'>
                 <img src={Search} alt="search" />
               </div>
@@ -41,8 +41,8 @@ const Menu = () => {
               <div className='menu__text'>Избранное</div>
             </Link>
             <div data-item='history'
-              className={history ? 'menu__block menu__block_line active' : 'menu__block menu__block_line'}
-              onClick={(event) => dispatch(SearchHistorycomponent(event))}>
+              className={historyComponent ? 'menu__block menu__block_line active' : 'menu__block menu__block_line'}
+              onClick={(event) => dispatch(navigation(event))}>
               <div className='menu__image'>
                 <img src={History} alt="history" />
               </div>
@@ -51,8 +51,8 @@ const Menu = () => {
           </div>
         </div>
       </div>
-      {search ? <SearchComponent /> : null}
-      {history ? <HistoryComponent /> : null}
+      {searchComponent ? <SearchComponent /> : null}
+      {historyComponent ? <HistoryComponent /> : null}
     </div>
   )
 }

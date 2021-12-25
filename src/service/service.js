@@ -6,7 +6,7 @@ const _baseOffset = 1
 
 const service = async (search = 'all', offset = _baseOffset) => {
   try {
-    const res = await axios.get(`${ _baseUrl }/photos?page=${ offset }&per_page=9&query=${ search }&client_id=${ _client_id }`)
+    const res = await axios.get(`${ _baseUrl }/photos?page=${ offset }&per_page=30&query=${ search }&client_id=${ _client_id }`)
     return {
       data: res.data.results.map(_transformImage),
       total: res.headers['x-total']
@@ -29,26 +29,3 @@ const _transformImage = (data) => {
 }
 
 export default service
-
-
-
-// <ul className='content__list' style={mode ? {columnCount: "1"} : {columnCount: "3"}}>
-//   {content}
-// </ul>
-
-// 'Wallpapers',
-//   'Textures & Patterns',
-//   'Nature',
-//   'Current Events',
-//   'Architecture',
-//   'Business & Work',
-//   'Film',
-//   'Animals',
-//   'Travel',
-//   'Fashion',
-//   'Food & Drink',
-//   'Spirituality',
-//   'Experimental',
-//   'People',
-//   'Health Arts',
-//   'Culture'

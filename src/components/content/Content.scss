@@ -7,9 +7,21 @@
     grid-column-gap: 1.6rem;
     position: relative;
     height: 100%;
+    display: -webkit-box; /* Not needed if autoprefixing */
+    display: -ms-flexbox; 
     display: flex;
-    width: auto;
-    // list-style: none;
+    // width: auto;
+    list-style: none;
+  }
+
+  &__column {
+    // padding-left: 30px; /* gutter size */
+    background-clip: padding-box;
+  }
+
+  &__column > div {
+    background: grey;
+    // margin-bottom: 30px
   }
 
   &__item {
@@ -25,13 +37,12 @@
     object-fit: cover;
   }
 
-
   &__link {
     width: 100%;
   }
 
   &__block {
-    display: flex; //
+    display: none; //
     position: absolute;
     justify-content: center;
     align-items: center;

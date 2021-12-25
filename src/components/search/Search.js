@@ -1,19 +1,19 @@
 import {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {searchRequest, searchInput, unsplashClear, unsplashRequest} from '../../redux/slice/menuSlice'
+import {clear, request} from '../../redux/slice/requestSlice'
+import {searchHandler} from '../../redux/slice/searchSlice'
+import {searchRequest} from '../../redux/slice/historySlice'
+
+
 import img from './search.svg'
-// import {createApi} from 'unsplash-js';
 import service from '../../service/service'
 import './Search.scss'
 
 const Search = () => {
   const [input, setInput] = useState('')
-  const {list} = useSelector((state) => state.menu)
+  const {history} = useSelector((state) => state.history)
   const dispatch = useDispatch()
 
-  // const unsplash = createApi({
-  //   accessKey: 'zzqpeE42R5zzjnVmGgWJc7TzM73NJjwrDPRAFpgFJX8'
-  // })
 
   const inputHandler = (event) => {
     setInput(event.target.value)
@@ -22,18 +22,16 @@ const Search = () => {
   const onInput = async(event) => {
     event.preventDefault()
     dispatch(searchRequest(input))
-    dispatch(unsplashClear())
-    dispatch(searchInput(input))
+    dispatch(clear())
+    dispatch(searchHandler(input))
     const res = await service(input)
-    dispatch(unsplashRequest(res.data))
-    // unsplash.search.getPhotos({query: 'cat'})
-    // .then(res => console.log(res.response.results[0].urls.regular))
+    dispatch(request(res.data))
   }
 
   useEffect(() => {
-    console.log(list[list.length - 1])
-    console.log(list)
-  }, [list])
+    console.log(history[history.length - 1])
+    console.log(history)
+  }, [history])
 
   return (
     <div className='search'>
@@ -51,7 +49,7 @@ const Search = () => {
       </form>
       <div className='search__line'></div>
       <ul className='search__list'>
-        {list.map((item, i) => (<li key={i} className="search__item">{item}</li>))}
+        {history.map((item, i) => (<li key={i} className="search__item">{item}</li>))}
       </ul>
     </div>
   )
