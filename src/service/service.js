@@ -9,7 +9,8 @@ const service = async (search = 'all', offset = _baseOffset) => {
     const res = await axios.get(`${ _baseUrl }/photos?page=${ offset }&per_page=30&query=${ search }&client_id=${ _client_id }`)
     return {
       data: res.data.results.map(_transformImage),
-      total: res.headers['x-total']
+      total: res.data.total,
+      total_pages: res.data.total_pages
     }
   } catch (error) {
     throw error
@@ -27,5 +28,29 @@ const _transformImage = (data) => {
     download: data.links.download
   }
 }
+
+// const API = axios.create({
+//   baseURL: 'https://api.unsplash.com/search/photos',
+//   headers: {
+//     Accept: 'application/json',
+//     'Content-Type': 'application/json',
+//   },
+//   params: {
+//     client_id: 'zzqpeE42R5zzjnVmGgWJc7TzM73NJjwrDPRAFpgFJX8',
+//     safesearch: true,
+//   },
+// })
+
+// const _transformImage = (data) => {
+//   return {
+//     id: data.id,
+//     image: data.urls.regular,
+//     username: data.user.username,
+//     first_name: data.user.first_name,
+//     last_name: data.user.last_name,
+//     profile_image: data.user.profile_image.large,
+//     download: data.links.download
+//   }
+// }
 
 export default service

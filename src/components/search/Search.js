@@ -1,9 +1,8 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {clear, request} from '../../redux/slice/requestSlice'
 import {searchHandler} from '../../redux/slice/searchSlice'
 import {searchRequest} from '../../redux/slice/historySlice'
-
 
 import img from './search.svg'
 import service from '../../service/service'
@@ -13,7 +12,6 @@ const Search = () => {
   const [input, setInput] = useState('')
   const {history} = useSelector((state) => state.history)
   const dispatch = useDispatch()
-
 
   const inputHandler = (event) => {
     setInput(event.target.value)
@@ -28,10 +26,10 @@ const Search = () => {
     dispatch(request(res.data))
   }
 
-  useEffect(() => {
-    console.log(history[history.length - 1])
-    console.log(history)
-  }, [history])
+  // useEffect(() => {
+  //   console.log(history[history.length - 1])
+  //   console.log(history)
+  // }, [history])
 
   return (
     <div className='search'>

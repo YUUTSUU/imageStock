@@ -10,24 +10,23 @@ import Favorite from './img/favorite.svg'
 import Download from './img/download.svg'
 import Maximize from './img/maximize.svg'
 import Spinner from '../spinner/Spinner'
+// import axios from 'axios';
 import './Content.scss'
 
 const Content = () => {
   const [loading, setLoading] = useState(true)
-  const [disabled, setDisabled] = useState(true)
   const [error, setError] = useState(false)
-  const [offset, setOffset] = useState(1)
+  const [pageNum, setPageNum] = useState(1)
   const [total, setTotal] = useState(0)
+  const [firstRequest, setFirstRequest] = useState(true)
 
   const {searchComponent, historyComponent} = useSelector(state => state.navigation)
   const {mode} = useSelector(state => state.mode)
   const {search} = useSelector((state) => state.search)
   const {content} = useSelector((state) => state.request)
+  const {favorites} = useSelector((state) => state.favorite)
+  const {switchContent} = useSelector((state) => state.switchContent)
   const dispatch = useDispatch()
-
-  const onDisabled = useCallback(() => {
-    setDisabled(false)
-  }, [])
 
   const onLoaded = useCallback((data) => {
     dispatch(request(data))
@@ -45,40 +44,42 @@ const Content = () => {
     }
   }, [dispatch])
 
-  const onRequest = useCallback(async (query, offset) => {
+  // const API = axios.create({
+  //   baseURL: 'https://api.unsplash.com/search/photos',
+  //   headers: {
+  //     Accept: 'application/json',
+  //     'Content-Type': 'application/json',
+  //   },
+  //   params: {
+  //     client_id: 'zzqpeE42R5zzjnVmGgWJc7TzM73NJjwrDPRAFpgFJX8',
+  //     safesearch: true,
+  //   },
+  // })
+
+  const onRequest = useCallback(async (query, pageNum) => {
     try {
-      onDisabled()
-      const res = await service(query, offset)
+      const res = await service(query, pageNum)
       onLoaded(res.data)
-      setOffset(prevOffset => prevOffset + 24)
-      setTotal(res.total)
-      console.log('onRequest')
+      setPageNum(prevPageNum => prevPageNum + 24)
+      setTotal(res.total_pages)
     } catch (e) {
       onError()
     }
-  }, [onDisabled, onError, onLoaded])
+  }, [onError, onLoaded])
 
-  // const scrollHandler = useCallback((event) => {
-  //   const scrollHeight = event.target.documentElement.scrollHeight
-  //   const scrollTop = event.target.documentElement.scrollTop
-  //   const clientHeight = event.target.documentElement.clientHeight
-
-  //   if ((scrollHeight - scrollTop) === clientHeight && content.length < total) {
-  //     onRequest(search, offset)
-  //   }
-  // }, [content, total, onRequest, search, offset])
+  // useEffect(() => {
+  //   API.get('/', {params: {page: 1, query: 'all'}})
+  //     .then(res => console.log(res.data))
+  //     .then(err => console.log(err))
+  // },[API])
 
   useEffect(() => {
-    // document.addEventListener('scroll', scrollHandler)
-    if (disabled) {
+    if (firstRequest) {
       onRequest(search)
+      setFirstRequest(false)
     }
-
     console.log("render")
-    // return () => {
-    //   document.removeEventListener('scroll', scrollHandler)
-    // }
-  }, [onRequest, disabled, search])
+  }, [firstRequest, onRequest, search])
 
   const renderContent = (content) => {
     const items = content.map(item => {
@@ -110,10 +111,10 @@ const Content = () => {
 
     return (
       <InfiniteScroll
-        pageStart={offset}
-        loadMore={() => onRequest(search, offset)}
-        hasMore={content.length < total ? true : false}
-        loader={<div className="loader" key={0}>Loading ...</div>}
+        pageStart={pageNum}
+        loadMore={() => onRequest(search, pageNum)}
+        hasMore={pageNum < total ? true : false}
+        loader={<Spinner key={0} />}
       >
         <Masonry breakpointCols={mode ? 1 : 3} className='content__list' columnClassName='content__column'>
           {items}
@@ -121,12 +122,14 @@ const Content = () => {
       </InfiniteScroll>
     )
   }
+  
+  const items = switchContent ? favorites : content
 
   return (
     <div className='content'>
       {searchComponent || historyComponent ? null : <Mode />}
       {loading ? <Spinner /> : null}
-      {!(loading || error) ? renderContent(content) : null}
+      {!(loading || error) ? renderContent(items) : null}
     </div>
   )
 }
