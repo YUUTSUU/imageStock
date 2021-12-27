@@ -347,7 +347,7 @@ body {
   &__block {
     display: none; // favorites
     position: absolute;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     flex-direction: column;
     color: #fff;
@@ -386,7 +386,7 @@ body {
 
   &__icon {
     display: flex;
-    margin-top: 5.5rem;
+    // margin-top: 5.5rem;
 
     img {
       cursor: pointer;
