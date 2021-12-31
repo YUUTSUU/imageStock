@@ -107,7 +107,7 @@ body {
     justify-content: space-around;
     width: 1.4rem;
     height: 1.4rem;
-    cursor: pointer;
+    // cursor: pointer;
   }
 
   &__ribbon.active .mode__item_ribbon {
@@ -120,7 +120,7 @@ body {
     height: 1.4rem;
     flex-wrap: wrap;
     justify-content: space-around;
-    cursor: pointer;
+    // cursor: pointer;
   }
 
   &__tile.active .mode__item_tile {
@@ -163,7 +163,7 @@ body {
     line-height: 6rem;
     text-transform: capitalize;
     width: 100%;
-    margin-left: 7rem;
+    // margin-left: 7rem;
 
     input {
       width: 100%;
@@ -186,6 +186,14 @@ body {
     justify-content: center;
     align-items: center;
     display: flex;
+
+    img {
+      width: 35%;
+    }
+
+    &_delete {
+      width: 20% !important;
+    }
   }
 
   &__line {
@@ -205,7 +213,7 @@ body {
     list-style: none;
     width: 65vw;
     overflow: hidden;
-    justify-content: center;
+    // justify-content: center;
     text-transform: capitalize;
   }
 
@@ -217,7 +225,7 @@ body {
     background-clip: text;
     color: transparent;
     flex-shrink: 0;
-    // flex-grow: 1;
+    flex-grow: 1;
     cursor: pointer;
     padding-bottom: .2rem;
 
@@ -292,7 +300,7 @@ body {
 
 .content {
   grid-column: 2/3;
-  grid-row: 2/3;
+  grid-row: 3/4;
   padding-top: 4.7rem;
 
   &__header {
@@ -387,6 +395,13 @@ body {
   &__icon {
     display: flex;
     // margin-top: 5.5rem;
+
+    &_item {
+      .delete {
+        width: 1.4rem;
+        margin-top: .25rem;
+      }
+    }
 
     img {
       cursor: pointer;
