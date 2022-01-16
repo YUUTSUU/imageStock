@@ -1,7 +1,4 @@
-import {useSelector} from 'react-redux'
-
-const History = ({historyQueryHandler}) => {
-  const {history} = useSelector(state => state.history)
+const History = ({historyQueryHandler, history}) => {
   return (
     <div className='history'>
       <div className='history__title'>Ваши запросы</div>

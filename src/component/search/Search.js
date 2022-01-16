@@ -1,9 +1,7 @@
-import {useSelector} from 'react-redux'
-import img from './img/search.svg'
-import deleteimg from './img/delete.png'
+import img from '../../assets/search.svg'
+import deleteimg from '../../assets/delete.png'
 
-const Search = ({text, textHandler, queryHandler, historyQueryHandler, deleteHandler}) => {
-  const {recommendations} = useSelector(state => state.history)
+const Search = ({text, textHandler, queryHandler, historyQueryHandler, deleteHandler, recommendations}) => {
   return (
     <div className='search'>
       <form className='search__form'>

@@ -1,11 +1,9 @@
-import './NotFound.scss'
+import {Error} from "../../component/error/Error"
 
-const NotFound = () => {
+export const NotFound = () => {
   return (
-    <div className='error'>
-      <h1 className='error__title'>404</h1>
-    </div>
+    <section className="notfound" >
+      <Error />
+    </section>
   )
 }
-
-export default NotFound

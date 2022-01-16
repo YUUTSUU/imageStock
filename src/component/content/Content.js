@@ -1,7 +1,8 @@
-import Favorite from './img/favorite.svg'
-import Download from './img/download.svg'
-import Maximize from './img/maximize.svg'
-import Delete from './img/delete.png'
+import Favorite from '../../assets/favorite.svg'
+import Download from '../../assets/download.svg'
+import Maximize from '../../assets/maximize.svg'
+import Delete from '../../assets/delete.png'
+import {useNavigate} from 'react-router-dom'
 
 const Content = ({
   id,
@@ -16,6 +17,11 @@ const Content = ({
   favoritesImagesDelete,
   verify
 }) => {
+  const navigate = useNavigate()
+
+  const photoHandler = () => {
+      navigate(`/photo/${ id }`)
+  }
 
   return (
     <li key={id} className='content__item' >
@@ -30,18 +36,18 @@ const Content = ({
             <span>{last_name}</span>
           </div>
           <div className='content__login'>
-            {username}
+            @{username}
           </div>
         </div>
         <div
           className='content__icon'
-          onClick={(e) => verify ? favoritesIdImages(e) : favoritesImagesDelete(e)}
+          onClick={() => verify ? favoritesIdImages(id) : favoritesImagesDelete(id)}
         >
           <div className='content__icon_item'>
             <img src={verify ? Favorite : Delete} alt="favorite" id={id} className={verify ? null : 'content__icon_item delete'}/>
           </div>
           <div className='content__icon_item'>
-            <img src={Maximize} alt="maximize" />
+            <img src={Maximize} alt="maximize" onClick={photoHandler}/>
           </div>
           <a href={download} download className='content__icon_item'>
             <img src={Download} alt="download" />

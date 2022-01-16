@@ -3,16 +3,18 @@ import {useDispatch, useSelector} from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom'
 import {navigationSearchDispatch, navigationHistoryDispatch, navigationFavoritesDispatch} from '../../redux/slice/navigationSlice'
 import {historyDipatch} from '../../redux/slice/historySlice'
-import BrandImage from './img/brand.svg'
-import SearchImage from './img/search.svg'
-import FavoritesImage from './img/favorite.svg'
-import HistoryImage from './img/history.svg'
+import BrandImage from '../../assets/brand.svg'
+import SearchImage from '../../assets/search.svg'
+import FavoritesImage from '../../assets/favorite.svg'
+import HistoryImage from '../../assets/history.svg'
 import Search from '../search/Search'
 import History from '../history/History'
 
 const Menu = () => {
   const navigate = useNavigate()
   const {searchToggle, historyToggle} = useSelector(state => state.navigation)
+  const {recommendations} = useSelector(state => state.history)
+  const {history} = useSelector(state => state.history)
   const dispatch = useDispatch()
   const [text, setText] = useState("")
 
@@ -36,6 +38,7 @@ const Menu = () => {
 
   const historyQueryHandler = (e) => {
     navigate(`/search/${ e.target.textContent.slice().toLowerCase() }`)
+    dispatch(historyDipatch(e.target.textContent.slice().toLowerCase()))
     setText(e.target.textContent.slice().toLowerCase())
   }
 
@@ -81,12 +84,13 @@ const Menu = () => {
       {searchToggle ?
         <Search
           text={text}
-          textHandler={textHandler} 
-          queryHandler={queryHandler} 
+          textHandler={textHandler}
+          queryHandler={queryHandler}
           historyQueryHandler={historyQueryHandler}
           deleteHandler={deleteHandler}
+          recommendations={recommendations}
         /> : null}
-      {historyToggle ? <History historyQueryHandler={historyQueryHandler} /> : null}
+      {historyToggle ? <History historyQueryHandler={historyQueryHandler} history={history} /> : null}
     </div>
   )
 }

@@ -1,9 +1,8 @@
 import {useEffect, useState} from 'react'
 import InfiniteScroll from 'react-infinite-scroller';
 import Masonry from 'react-masonry-css'
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {favoritesIdDispatch, favoritesImagesDispatch} from '../../redux/slice/favoritesSlice'
-import {windowHandler} from '../../redux/slice/modeSlice'
 import {searchService} from '../../service/service'
 import Spinner from '../../component/spinner/Spinner'
 import Content from '../../component/content/Content'
@@ -13,67 +12,38 @@ import {useParams} from 'react-router-dom'
 
 const SearchPage = () => {
   const dispatch = useDispatch()
-  const {mode, column} = useSelector(state => state.mode)
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [images, setImages] = useState([])
   const {name} = useParams()
 
-  const favoritesIdImages = (e) => {
-    dispatch(favoritesIdDispatch(e))
+  const favoritesIdImages = (id) => {
+    dispatch(favoritesIdDispatch(id))
     dispatch(favoritesImagesDispatch(images))
   }
 
-  const firstFetchImage = (query, page) => {
+  const fetchImage = (query) => {
     searchService(query, page)
       .then(res => {
-        setImages(res.results)
+        setImages(prevImages => [...prevImages, ...res.results.filter(item => !prevImages.some(items => items.id === item.id))])
         setTotal(res.total_pages)
         setPage(prevPage => prevPage + 1)
         setLoading(false)
-        console.log('request-first-search-page')
       })
       .catch(error => {
         console.log(error)
         setLoading(false)
       })
   }
-
-  const fetchImage = (query, page) => {
-    searchService(query, page)
-      .then(res => {
-        setImages([...images, ...res.results])
-        setTotal(res.total_pages)
-        setPage(prevPage => prevPage + 1)
-        setLoading(false)
-        console.log('request-second-search-page')
-      })
-      .catch(error => {
-        console.log(error)
-        setLoading(false)
-      })
-  }
-
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      dispatch(windowHandler())
-    })
-
-    return () => {
-      window.removeEventListener("resize", () => {
-        dispatch(windowHandler())
-      })
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   useEffect(() => {
     if (name !== '') {
-      firstFetchImage(name, page)
+      setPage(1)
+      setImages([])
+      fetchImage(name)
     }
-    console.log('render-search-page')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [name])
 
   return (
@@ -81,18 +51,22 @@ const SearchPage = () => {
       <div className="container">
         <Menu />
         <div className='content'>
-          {<Mode mode={mode} />}
+          {<Mode />}
           {loading ? <Spinner /> : null}
           <InfiniteScroll
             pageStart={page}
-            loadMore={() => fetchImage(name, page)}
-            hasMore={page < total ? true : false}
+            loadMore={() => fetchImage(name)}
+            hasMore={page < total}
             threshold={1500}
             loader={<Spinner key={0} />}
             initialLoad={false}
           >
             <Masonry
-              breakpointCols={column}
+              breakpointCols={{
+                default: 3,
+                850: 2,
+                650: 1,
+              }}
               className='content__list'
               columnClassName='content__column'
             >

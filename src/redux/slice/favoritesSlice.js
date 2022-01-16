@@ -8,14 +8,12 @@ const favoritesSlice = createSlice({
   },
   reducers: {
     favoritesIdDispatch: (state, action) => {
-      if (action.payload.target.nodeName === 'IMG') {
-        return {
-          ...state,
-          id: [
-            ...state.id,
-            action.payload.target.id
-          ]
-        }
+      return {
+        ...state,
+        id: [
+          ...state.id,
+          action.payload
+        ]
       }
     },
     favoritesImagesDispatch: (state, action) => {
@@ -29,12 +27,16 @@ const favoritesSlice = createSlice({
     favoritesImagesDeleteDispatch: (state, action) => {
       return {
         ...state,
-        images: state.images.filter(item => !action.payload.target.id.includes(item.id)),
-        id: state.id.filter(item => !action.payload.target.id.includes(item)),
+        images: state.images.filter(item => !action.payload.includes(item.id)),
+        id: state.id.filter(item => !action.payload.includes(item)),
       }
     }
   }
 })
 
-export const {favoritesIdDispatch, favoritesImagesDispatch, favoritesImagesDeleteDispatch} = favoritesSlice.actions
+export const {
+  favoritesIdDispatch,
+  favoritesImagesDispatch,
+  favoritesImagesDeleteDispatch
+} = favoritesSlice.actions
 export default favoritesSlice.reducer
